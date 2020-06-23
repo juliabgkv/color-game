@@ -3,7 +3,10 @@ import './styles.scss';
 const squares = document.getElementsByClassName('square');
 const currentColorDisplay = document.getElementById('currentColorDisplay');
 const header = document.getElementById('header');
+const defaultColor = header.style.backgroundColor;
 const stripeContainer = document.getElementById('stripeContainer');
+const newColorsBtn = document.getElementsByClassName('new-colors-btn')[0];
+const gameMessageBox = document.getElementById('gameMessageBox');
 let currentColor = null;
 let rightAnswerIndex = null;
 
@@ -14,6 +17,10 @@ document.getElementById('squaresContainer').addEventListener('click', onSquaresC
 
 function onStripeContainerClick(e) {
     if(e.target.classList.contains('new-colors-btn')) {
+        newColorsBtn.innerText = 'New colors';
+        gameMessageBox.innerText = '';
+        setStyle(header, defaultColor);
+        resetSquares();
         generateNewColors();
     }
 }
@@ -22,9 +29,16 @@ function onSquaresContainerClick(e) {
     if(e.target.classList.contains('square')) {
         e.stopPropagation();
         if(e.target.style.backgroundColor === currentColor) {
-            document.getElementById('gameMessageBox').innerText = 'Correct!';
+            gameMessageBox.innerText = 'Correct!';
+            newColorsBtn.innerText = 'Play Again?';
             setStyle(header, currentColor);
-            Array.prototype.map.call(squares, elem => elem.style.backgroundColor = currentColor);
+            Array.prototype.map.call(squares, item => {
+                setStyle(item, currentColor);
+            });
+            resetSquares();
+        } else {
+            gameMessageBox.innerText = 'Try Again';
+            e.target.classList.add('hidden');
         }
     }
 }
@@ -33,10 +47,15 @@ function init() {
     generateNewColors();
 }
 
+function resetSquares() {
+    Array.prototype.map.call(squares, item => {
+        item.classList.remove('hidden');
+    });
+}
+
 function generateNewColors() {
     currentColor = getNewColor();
     showGameMessage(currentColor.toUpperCase());
-    console.log(currentColor);
     rightAnswerIndex = getRandomNum(squares.length - 1, 0);
     colorSquares(rightAnswerIndex);
 }
