@@ -4,7 +4,6 @@ body,html {
     height: 100%;
     font-family: 'Roboto', sans-serif;
     min-height: 670px;
-    // min-width: 620px;
 }
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
@@ -34,11 +33,11 @@ h1, h2, h3, h4, h5, h6 {
         .game-title {
             text-transform: uppercase;
             font-weight: 400;
-            font-size: 35px;
+            font-size: 30px;
         }
         .current-color {
             font-weight: 500;
-            font-size: 48px;
+            font-size: 60px;
         }
     }
 }
@@ -59,6 +58,13 @@ h1, h2, h3, h4, h5, h6 {
             font-family: 'Roboto', sans-serif;
             height: 100%;
             cursor: pointer;
+
+            &:focus {
+                outline: none;
+            }
+        }
+        .message {
+            line-height: 30px;
         }
         .game-difficulty {
             height: 100%;
@@ -74,6 +80,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #242424;
     height: calc(100% - 230px);
     width: 100%;
+    cursor: pointer;
 
     .squares-container {
         width: 100%;

@@ -7,19 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="header">
+    <div class="header" id="header">
         <div class="default-content-width">
             <div class="header-container flexbox">
                 <h4 class="game-title">Color guessing game</h4>
-                <h1 id="currentColor" class="current-color">RGB</h1>
+                <h1 class="current-color" id="currentColorDisplay"></h1>
             </div>
         </div>
     </div>
     <div class="stripe">
         <div class="default-content-width">
-            <div class="stripe-container control-stripe flexbox">
+            <div class="stripe-container control-stripe flexbox" id="stripeContainer">
                 <button class="main-btn new-colors-btn">New colors</button>
-                <div class="message"></div>
+                <div class="message" id="gameMessageBox"></div>
                 <div class="game-difficulty">
                     <button class="main-btn easy-level">Easy</button>
                     <button class="main-btn hard-level">Hard</button>
@@ -29,7 +29,7 @@
     </div>
     <div class="squares">
         <div class="default-content-width">
-            <div class="squares-container flexbox">
+            <div class="squares-container flexbox" id="squaresContainer">
                 <div class="row flexbox">
                     <div class="square"></div>
                     <div class="square"></div>
