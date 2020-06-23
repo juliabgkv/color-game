@@ -1,3 +1,101 @@
-body {
-    background-color: lightblue;
+body,html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    min-height: 670px;
+    // min-width: 620px;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+}
+.default-content-width {
+    height: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+.flexbox {
+    display: flex;
+}
+.header {
+    text-align: center;
+    background-color: #2980b9;
+    color: #fff;
+    height: 200px;
+
+    .header-container {
+        height: 100%;
+        flex-flow: column;
+        justify-content: space-evenly;
+
+        .game-title {
+            text-transform: uppercase;
+            font-weight: 400;
+            font-size: 35px;
+        }
+        .current-color {
+            font-weight: 500;
+            font-size: 48px;
+        }
+    }
+}
+.stripe {
+    background-color: #fff;
+    height: 30px;
+
+    .stripe-container {
+        justify-content: space-between;
+        height: 100%;
+
+        .main-btn {
+            background-color: transparent;
+            border: none;
+            color: #2980b9;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+            cursor: pointer;
+        }
+        .game-difficulty {
+            height: 100%;
+
+            .hard-level {
+                background-color: #2980b9;
+                color: #fff;;
+            }
+        }
+    }
+}
+.squares {
+    background-color: #242424;
+    height: calc(100% - 230px);
+    width: 100%;
+
+    .squares-container {
+        width: 100%;
+        height: 100%;
+        flex-flow: column;
+        justify-content: space-evenly;
+
+        .row {
+            justify-content: center;
+
+            .square {
+                flex: 1 0 auto;
+                height: auto;
+                background-color: #fff;
+                border-radius: 25px;
+                margin: 15px;
+            }
+            .square::before {
+                content: '';
+                float: left;
+                padding-top: 100%;
+            }
+        }
+    }
 }

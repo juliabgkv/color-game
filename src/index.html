@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Color Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Color game</h1>
+    <div class="header">
+        <div class="default-content-width">
+            <div class="header-container flexbox">
+                <h4 class="game-title">Color guessing game</h4>
+                <h1 id="currentColor" class="current-color">RGB</h1>
+            </div>
+        </div>
+    </div>
+    <div class="stripe">
+        <div class="default-content-width">
+            <div class="stripe-container control-stripe flexbox">
+                <button class="main-btn new-colors-btn">New colors</button>
+                <div class="message"></div>
+                <div class="game-difficulty">
+                    <button class="main-btn easy-level">Easy</button>
+                    <button class="main-btn hard-level">Hard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="squares">
+        <div class="default-content-width">
+            <div class="squares-container flexbox">
+                <div class="row flexbox">
+                    <div class="square"></div>
+                    <div class="square"></div>
+                    <div class="square"></div>
+                </div>
+                <div class="row flexbox">
+                    <div class="square"></div>
+                    <div class="square"></div>
+                    <div class="square"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
