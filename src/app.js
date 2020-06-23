@@ -1,22 +1,40 @@
 import './styles.scss';
 
-const squares = document.getElementsByClassName('square');
+const RGB_MAX_VALUE = 255;
+let squares = document.getElementsByClassName('square');
 const currentColorDisplay = document.getElementById('currentColorDisplay');
 const header = document.getElementById('header');
 const defaultColor = header.style.backgroundColor;
 const stripeContainer = document.getElementById('stripeContainer');
 const newColorsBtn = document.getElementsByClassName('new-colors-btn')[0];
 const gameMessageBox = document.getElementById('gameMessageBox');
+const levelBtns = document.getElementsByClassName('level-btn');
 let currentColor = null;
 let rightAnswerIndex = null;
 
-init();
+generateNewColors();
 
 stripeContainer.addEventListener('click', onStripeContainerClick);
 document.getElementById('squaresContainer').addEventListener('click', onSquaresContainerClick);
 
 function onStripeContainerClick(e) {
-    if(e.target.classList.contains('new-colors-btn')) {
+    const targetClassList = e.target.classList;
+    if(targetClassList.contains('main-btn')) {
+        e.preventDefault();
+
+        if(targetClassList.contains('level-btn')) {
+            Array.prototype.map.call(levelBtns, item => item.classList.remove('selected'));
+            targetClassList.add('selected');
+            const squareRows = document.getElementsByClassName('row');
+
+            if(targetClassList.contains('hard-level')) {
+                squareRows[1].style.visibility = 'visible';
+                squares = document.getElementsByClassName('square');
+            } else if(targetClassList.contains('easy-level')) {
+                squareRows[1].style.visibility = 'hidden';
+                squares = squareRows[0].children;
+            }
+        }
         newColorsBtn.innerText = 'New colors';
         gameMessageBox.innerText = '';
         setStyle(header, defaultColor);
@@ -28,6 +46,7 @@ function onStripeContainerClick(e) {
 function onSquaresContainerClick(e) {
     if(e.target.classList.contains('square')) {
         e.stopPropagation();
+
         if(e.target.style.backgroundColor === currentColor) {
             gameMessageBox.innerText = 'Correct!';
             newColorsBtn.innerText = 'Play Again?';
@@ -41,10 +60,6 @@ function onSquaresContainerClick(e) {
             e.target.classList.add('hidden');
         }
     }
-}
-
-function init() {
-    generateNewColors();
 }
 
 function resetSquares() {
@@ -77,9 +92,9 @@ function colorSquares(rightSquareIndex) {
 
 function getNewColor() {
     const color = {
-        red: getRandomNum(0, 255),
-        green: getRandomNum(0, 255),
-        blue: getRandomNum(0, 255)
+        red: getRandomNum(0, RGB_MAX_VALUE),
+        green: getRandomNum(0, RGB_MAX_VALUE),
+        blue: getRandomNum(0, RGB_MAX_VALUE)
     };
 
     return `rgb(${color.red}, ${color.green}, ${color.blue})`;

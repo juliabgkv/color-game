@@ -69,7 +69,7 @@ h1, h2, h3, h4, h5, h6 {
         .game-difficulty {
             height: 100%;
 
-            .hard-level {
+            .selected {
                 background-color: #2980b9;
                 color: #fff;;
             }
@@ -80,7 +80,6 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #242424;
     height: calc(100% - 230px);
     width: 100%;
-    cursor: pointer;
 
     .squares-container {
         width: 100%;
@@ -93,6 +92,7 @@ h1, h2, h3, h4, h5, h6 {
             justify-content: center;
 
             .square {
+                cursor: pointer;
                 flex: 1 0 auto;
                 height: auto;
                 background-color: #fff;
