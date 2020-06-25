@@ -1,4 +1,5 @@
 import './styles.scss';
+import confetti from 'canvas-confetti';
 
 const RGB_MAX_VALUE = 255;
 let squares = document.getElementsByClassName('square');
@@ -11,6 +12,11 @@ const gameMessageBox = document.getElementById('gameMessageBox');
 const levelBtns = document.getElementsByClassName('level-btn');
 let currentColor = null;
 let rightAnswerIndex = null;
+let wrongAnswerMessages = [
+    'Nope',
+    'Try Again...',
+    'Wrong',
+];
 
 generateNewColors();
 
@@ -35,6 +41,7 @@ function onStripeContainerClick(e) {
                 squares = squareRows[0].children;
             }
         }
+        Array.prototype.map.call(squares, square => square.classList.remove('unaviable'));
         newColorsBtn.innerText = 'New colors';
         gameMessageBox.innerText = '';
         setStyle(header, defaultColor);
@@ -44,19 +51,21 @@ function onStripeContainerClick(e) {
 }
 
 function onSquaresContainerClick(e) {
-    if(e.target.classList.contains('square')) {
+    if(e.target.classList.contains('square') && !e.target.classList.contains('unaviable')) {
         e.stopPropagation();
 
         if(e.target.style.backgroundColor === currentColor) {
+            confettiLaunch();
             gameMessageBox.innerText = 'Correct!';
             newColorsBtn.innerText = 'Play Again?';
             setStyle(header, currentColor);
             Array.prototype.map.call(squares, item => {
                 setStyle(item, currentColor);
+                item.classList.add('unaviable');
             });
             resetSquares();
         } else {
-            gameMessageBox.innerText = 'Try Again';
+            gameMessageBox.innerText = wrongAnswerMessages[getRandomNum(0, 2)];
             e.target.classList.add('hidden');
         }
     }
@@ -106,4 +115,19 @@ function getRandomNum(from, to) {
 
 function setStyle(element, color) {
     element.style.backgroundColor = color;
+}
+
+function confettiLaunch() {
+    confetti({
+        particleCount: 200,
+        angle: 60,
+        spread: 100,
+        origin: { x: 0 }
+    });
+    confetti({
+        particleCount: 200,
+        angle: 120,
+        spread: 100,
+        origin: { x: 1 }
+    });
 }
