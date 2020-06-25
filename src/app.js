@@ -10,15 +10,18 @@ const stripeContainer = document.getElementById('stripeContainer');
 const newColorsBtn = document.getElementsByClassName('new-colors-btn')[0];
 const gameMessageBox = document.getElementById('gameMessageBox');
 const levelBtns = document.getElementsByClassName('level-btn');
-let currentColor = null;
-let rightAnswerIndex = null;
-let wrongAnswerMessages = [
+const scoreElement = document.getElementById('score');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const wrongAnswerMessages = [
     'Nope',
     'Try Again...',
     'Wrong',
 ];
+let currentColor = null;
+let rightAnswerIndex = null;
+let score = 0;
 
-generateNewColors();
+init();
 
 stripeContainer.addEventListener('click', onStripeContainerClick);
 document.getElementById('squaresContainer').addEventListener('click', onSquaresContainerClick);
@@ -54,7 +57,9 @@ function onSquaresContainerClick(e) {
     if(e.target.classList.contains('square') && !e.target.classList.contains('unaviable')) {
         e.stopPropagation();
 
+        let isCorrect = true;
         if(e.target.style.backgroundColor === currentColor) {
+            score += 5;
             confettiLaunch();
             gameMessageBox.innerText = 'Correct!';
             newColorsBtn.innerText = 'Play Again?';
@@ -65,10 +70,50 @@ function onSquaresContainerClick(e) {
             });
             resetSquares();
         } else {
+            score -= 1;
+            isCorrect = false;
             gameMessageBox.innerText = wrongAnswerMessages[getRandomNum(0, 2)];
             e.target.classList.add('hidden');
         }
+        displayScoreChanging(isCorrect);
     }
+}
+
+function init() {
+    generateNewColors();
+    displayScore();
+}
+
+function displayScoreChanging(isCorrectAnswer) {
+    displayScore();
+
+    const scoreIndicator = createIndicator(isCorrectAnswer);
+    scoreDisplay.append(scoreIndicator);
+
+     setTimeout(function() {
+        scoreIndicator.remove();
+    }, 900);
+}
+
+function createElement(tagName, className) {
+    const el = document.createElement(tagName);
+    el.classList.add(className);
+    return el;
+}
+
+function createIndicator(isCorrectAnswer) {
+    const scoreIndicator = createElement('span', 'score-indicator');
+
+    const currentClass = isCorrectAnswer ? 'correct' : 'wrong';
+    scoreIndicator.classList.add(currentClass);
+
+    scoreIndicator.innerText = isCorrectAnswer ? '+5' : '-1';
+
+    return scoreIndicator;
+}
+
+function displayScore() {
+    scoreElement.innerText = score;
 }
 
 function resetSquares() {
@@ -80,7 +125,7 @@ function resetSquares() {
 function generateNewColors() {
     currentColor = getNewColor();
     showGameMessage(currentColor.toUpperCase());
-    rightAnswerIndex = getRandomNum(squares.length - 1, 0);
+    rightAnswerIndex = getRandomNum(0, squares.length - 1);
     colorSquares(rightAnswerIndex);
 }
 

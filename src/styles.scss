@@ -39,6 +39,23 @@ h1, h2, h3, h4, h5, h6 {
             font-weight: 500;
             font-size: 60px;
         }
+        .score-display {
+            position: relative;
+
+            .score-indicator {
+                position: absolute;
+                right: 220px;
+                transition:.2s ease-out;
+                animation: 1s linear up-down;
+                
+                &.correct {
+                    color: #bdc3c7;
+                }
+                &.wrong {
+                    color: red;
+                }
+            }
+        }
     }
 }
 .stripe {
@@ -111,5 +128,23 @@ h1, h2, h3, h4, h5, h6 {
                 padding-top: 100%;
             }
         }
+    }
+}
+
+@keyframes up-down {
+    0% {
+        top: -100%;
+        opacity: 0;
+        visibility: hidden;
+    }
+    50% {
+        top: 0;
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+        visibility: hidden;
     }
 }
