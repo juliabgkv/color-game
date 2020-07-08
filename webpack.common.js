@@ -3,18 +3,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+
 module.exports = {
     entry: './src/app.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    mode: 'development',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist'
-    },
-    devtool: 'inline-source-map',
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            favicon: './src/images/favicon.png'
+        }),
+        new CleanWebpackPlugin()
+    ],
     module: {
         rules: [
             {
@@ -54,11 +56,4 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            favicon: './src/images/favicon.png'
-        }),
-        new CleanWebpackPlugin()
-    ]
 };

@@ -2,7 +2,7 @@ import './styles.scss';
 import confetti from 'canvas-confetti';
 
 const RGB_MAX_VALUE = 255;
-let squares = document.getElementsByClassName('square');
+let squares = null;
 const currentColorDisplay = document.getElementById('currentColorDisplay');
 const header = document.getElementById('header');
 const defaultColor = header.style.backgroundColor;
@@ -80,6 +80,7 @@ function onSquaresContainerClick(e) {
 }
 
 function init() {
+    squares = document.getElementsByClassName('square');
     generateNewColors();
     displayScore();
 }
