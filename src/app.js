@@ -1,4 +1,3 @@
-import './styles.scss';
 import confetti from 'canvas-confetti';
 
 const RGB_MAX_VALUE = 255;

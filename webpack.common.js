@@ -2,20 +2,28 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: './src/app.js',
+    entry: {
+        'styles.css': [
+          path.resolve(__dirname, './src/styles.scss')
+        ],
+        'bundle.js': [
+          path.resolve(__dirname, './src/app.js')
+        ]
+    },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        filename: '[name]',
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
             favicon: './src/images/favicon.png'
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new ExtractTextPlugin('bundle.css')
     ],
     module: {
         rules: [
@@ -24,35 +32,15 @@ module.exports = {
                 loader: 'html-loader'
             },
             {
-                test: /\.scss$/i,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [
-                                autoprefixer({
-                                    Browserslist:['ie >= 8', 'last 4 version']
-                                })
-                            ],
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    }
-                ]
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
+            },
+            {
+                test: /\.css/,
+                loader: 'css!style!autoprefixer!?browsers=last 12 versions',
             }
         ]
     },
